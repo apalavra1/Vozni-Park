@@ -28,9 +28,9 @@ public class KorisnikDAO
 
 	        stmt = c.createStatement();
 	    	System.out.println("Opened database successfully");
-	    	String sql = "INSERT INTO VOZNI_PARK.KORISNIK (ID,IME,PREZIME,EMAIL_ADRESA,DATUM_RODJENJA,USERNAME,PASSWORD,POTVRDA_PASSWORD) "
-		               + "VALUES (";
-	    	String parametri = Integer.toString(k.getId()) + ", '" + k.getIme() + "','" + k.getPrezime() + "','" + k.getEmail_adresa() + "',null,'" + k.getUsername() + "','" + k.getPassword() + "','" + k.getPotvrda_password() + "' );";
+	    	String sql = "INSERT INTO VOZNI_PARK.KORISNIK (IME,PREZIME,EMAIL_ADRESA,DATUM_RODJENJA,USERNAME,PASSWORD,POTVRDA_PASSWORD) "
+		               + "VALUES ('";
+	    	String parametri = k.getIme() + "','" + k.getPrezime() + "','" + k.getEmail_adresa() + "','" + k.getDatum_rodjenja() + "','" + k.getUsername() + "','" + k.getPassword() + "','" + k.getPotvrda_password() + "' );";
 	    	sql += parametri;
 	    	
 	    	stmt.executeUpdate(sql);
