@@ -7,6 +7,10 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
+	<bean id="voziloDAO" class="net.codejava.springmvc.VoziloDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
 		<property name="driverClassName" value="org.postgresql.Driver" />

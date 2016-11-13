@@ -50,6 +50,14 @@ public class HomeController {
 	    return "test";
 	}
 	
+	@RequestMapping(value = "/unosVozila", method = RequestMethod.GET)
+	public String unosVozila(Model model) {
+		model.addAttribute("userFormUnosVozila", new Vozilo());
+		
+	 
+	    return "unosVozila";
+	}
+	
 	@RequestMapping(value = "/pocetna", method = RequestMethod.GET)
 	public String pocetna(Model model) 
 	{	
@@ -85,6 +93,21 @@ public class HomeController {
 		
 		korisnikDAO.provjeriLogin(k.getUsername(), k.getPassword());
 		
-		return "redirect:pocetna";
+		return "redirect:unosVozila";
+	}
+	
+	@RequestMapping(value = "/unosVozila", method = RequestMethod.POST)
+	public String register(Model model, @ModelAttribute("userFormUnosVozila") Vozilo v) 
+	{
+		model.addAttribute("userFormUnosVozila", new Vozilo());
+		
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
+		
+		voziloDAO.unesi(v);
+		System.out.println(v.getMarkaVozila());
+		
+		return "unosVozila";
 	}
 }
