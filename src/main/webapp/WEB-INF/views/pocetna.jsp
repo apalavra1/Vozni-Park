@@ -21,6 +21,7 @@
           <div class="randompad">
 			<form:form action="login" method="post" commandName="userFormLogin">
 				<fieldset>
+				   <form:hidden path="id" />
 	               <label name="userName">Korisničko ime</label>
 	               <form:input path="username" />
 	               <label name="password">Korisnička šifra</label>
@@ -37,6 +38,7 @@
           <div class="randompad">
 	          <form:form action="register" method="post" commandName="userFormRegister">
 	             <fieldset id="lijevo">
+	             	   <form:hidden path="id" />
 		               <label name="ime">Ime</label>
 		               <form:input path="ime" />
 		               <label name="prezime">Prezime</label>

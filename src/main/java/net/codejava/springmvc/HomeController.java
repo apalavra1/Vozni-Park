@@ -17,6 +17,10 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 /**
  * Handles requests for the application home page.
  */
@@ -83,31 +87,44 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(Model model, @ModelAttribute("userFormLogin") Korisnik k) 
+	public String login(HttpSession session, Model model, @ModelAttribute("userFormLogin") Korisnik k) 
 	{
 		model.addAttribute("userFormLogin", new Korisnik());
 		model.addAttribute("userFormRegister", new Korisnik());
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		KorisnikDAO korisnikDAO = ctx.getBean("korisnikDAO", KorisnikDAO.class);
-		
-		korisnikDAO.provjeriLogin(k.getUsername(), k.getPassword());
-		
-		return "redirect:unosVozila";
+		if(korisnikDAO.provjeriLogin(k.getUsername(), k.getPassword()))
+		{
+			session.setAttribute("loggedInUser", korisnikDAO.dajKorisnika(k.getUsername(), k.getPassword()));
+			System.out.println(((Korisnik)session.getAttribute("loggedInUser")).getId());
+			return "redirect:unosVozila";
+		}
+		else
+		{
+			return "redirect:pocetna";
+		}
 	}
 	
 	@RequestMapping(value = "/unosVozila", method = RequestMethod.POST)
-	public String register(Model model, @ModelAttribute("userFormUnosVozila") Vozilo v) 
+	public String register(HttpSession session, Model model, @ModelAttribute("userFormUnosVozila") Vozilo v) 
 	{
 		model.addAttribute("userFormUnosVozila", new Vozilo());
 		
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
-		
-		voziloDAO.unesi(v);
+		voziloDAO.unesi(v, ((Korisnik)session.getAttribute("loggedInUser")).getId());
 		System.out.println(v.getMarkaVozila());
 		
 		return "unosVozila";
+	}
+	
+	@RequestMapping("/odjava")
+	public String odjava(HttpSession session)
+	{
+		session.removeAttribute("loggedInUser");
+		session.invalidate();
+		return "redirect:pocetna";
 	}
 }
