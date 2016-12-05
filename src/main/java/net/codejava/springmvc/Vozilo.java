@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class Vozilo {
+
 	private String markaVozila;
 	private String model;
 	private double serviskm;
@@ -42,7 +43,7 @@ public class Vozilo {
 	}
 	
 	public void setServismj(int servismj) {
-		this.serviskm = servismj;
+		this.servismj = servismj;
 	}
 	
 	public Date getGodiste() {
@@ -61,5 +62,5 @@ public class Vozilo {
 		this.registraskaOznaka = registarskaOznaka;
 	}
 	
-	Vozilo() { }
+	Vozilo() {  }
 }

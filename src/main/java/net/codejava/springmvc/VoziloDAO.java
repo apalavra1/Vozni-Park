@@ -31,6 +31,7 @@ public class VoziloDAO {
 
 	        stmt = c.createStatement();
 	    	System.out.println("Opened database successfully");
+	    	//System.out.println(v.getServiskm());
 	    	String sql = "INSERT INTO VOZNI_PARK.VOZILO (REGISTRACIJA,NAZIV,STATUS,ZADNJI_SERVIS_KILOMETRI,ZADNJI_SERVIS_MJESECI,PREDJENI_KILOMETRI,PROIZVODJAC,GODINA_PROIZVODNJE,KORISNIK_ID) "
 		               + "VALUES ('";
 	    	String parametri = v.getRegistarskaOznaka() + "','" + v.getModel() + "','" + "Slobodan" + "','" + v.getServiskm() + "','" + v.getServismj() + "','" + "500" + "','" + v.getMarkaVozila() + "','" + v.getGodiste() + "','" + id + "' );";

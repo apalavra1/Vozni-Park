@@ -6,7 +6,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Unos vozila</title>
+  <title>Moja vozila</title>
   <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
   <style type="text/css">
 	  	
@@ -185,6 +185,7 @@
 				 <td class="text-left"><c:out value="${vozilo.servismj}" /></td>
 			     <td class="text-left"><c:out value="${vozilo.markaVozila}" /></td>
 				 <td class="text-left"><c:out value="${vozilo.godiste}" /></td>
+				 <td><input type = "checkbox" name="Ids" value = "${vozilo.registraskaOznaka}" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>
