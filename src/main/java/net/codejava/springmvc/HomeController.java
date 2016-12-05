@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,6 +71,23 @@ public class HomeController {
 		model.addAttribute("userFormRegister", new Korisnik());
 
 	    return "pocetna";
+	}
+	
+	@RequestMapping(value = "/mojaVozila", method = RequestMethod.GET)
+	public Model mojaVozila(HttpSession session, Model model) 
+	{	
+		int id_korisnika = ((Korisnik)session.getAttribute("loggedInUser")).getId();
+		
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
+		List<Vozilo> lista_vozila = new ArrayList<Vozilo>();
+		lista_vozila = voziloDAO.dajVozila(id_korisnika);
+		
+		model.addAttribute("userFormMojaVozila", lista_vozila);
+		
+	    //return "mojaVozila";
+		return model;
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
