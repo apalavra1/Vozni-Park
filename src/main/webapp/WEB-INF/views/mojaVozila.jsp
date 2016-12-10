@@ -36,8 +36,9 @@
 		  border-radius:3px;
 		  border-collapse: collapse;
 		  height: auto;
+		  max-height:500px;
 		  margin: auto;
-		  max-width: 900px;
+		  max-width: auto;
 		  padding:10px;
 		  width: 100%;
 		  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -56,6 +57,7 @@
 		  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 		  vertical-align:middle;
 		}
+		
 
 		th:first-child {
 		  border-top-left-radius:3px;
