@@ -36,8 +36,9 @@
 		  border-radius:3px;
 		  border-collapse: collapse;
 		  height: auto;
+		  max-height:500px;
 		  margin: auto;
-		  max-width: 700px;
+		  max-width: auto;
 		  padding:10px;
 		  width: 100%;
 		  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -56,6 +57,7 @@
 		  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 		  vertical-align:middle;
 		}
+		
 
 		th:first-child {
 		  border-top-left-radius:3px;
@@ -146,8 +148,11 @@
 		}
 		#tabelaVozila {
 			position: absolute;
-			top: 15%;
-			left: 25%;
+			top: 35%;
+			left: 10%;
+			right:10%;
+			max-height:400px; 
+			overflow-y: auto;
 		}
   </style>
 </head>
@@ -174,6 +179,7 @@
 				<th class="text-left">Zadnji servis mjeseci</th>
 				<th class="text-left">Proizvodjac</th>
 				<th class="text-left">Godina proizvodnje</th>
+				<th class="text-left"><input type="checkbox"></th>
 			</tr>
 		</thead>
 		<tbody class="table-hover">
@@ -185,7 +191,7 @@
 				 <td class="text-left"><c:out value="${vozilo.servismj}" /></td>
 			     <td class="text-left"><c:out value="${vozilo.markaVozila}" /></td>
 				 <td class="text-left"><c:out value="${vozilo.godiste}" /></td>
-				 <td><input type = "checkbox" name="Ids" value = "${vozilo.registraskaOznaka}" /></td>
+				 <td><input type = "checkbox" name="Ids" value = "${vozilo.registarskaOznaka}" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>
