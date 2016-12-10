@@ -6,13 +6,22 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class Vozilo {
-
+	
+	private int id;
 	private String markaVozila;
 	private String model;
 	private double serviskm;
 	private int servismj;
 	private Date godiste;
 	private String registraskaOznaka;
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getMarkaVozila() {
 		return this.markaVozila;

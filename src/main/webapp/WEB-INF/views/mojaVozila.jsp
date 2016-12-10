@@ -37,7 +37,7 @@
 		  border-collapse: collapse;
 		  height: auto;
 		  margin: auto;
-		  max-width: 700px;
+		  max-width: 900px;
 		  padding:10px;
 		  width: 100%;
 		  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -123,10 +123,13 @@
 		
 		th.text-left {
 		  text-align: left;
+		  width: 150px;
 		}
 
 		th.text-center {
 		  text-align: center;
+		  width: 150px;
+		  max-width: 150px;
 		}
 		
 		th.text-right {
@@ -144,11 +147,44 @@
 		td.text-right {
 		  text-align: right;
 		}
-		#tabelaVozila {
+		
+		#formVozila {
 			position: absolute;
-			top: 15%;
+			top: 27%;
 			left: 25%;
 		}
+		
+		#obrisiBtn {
+			margin-left: 25%;
+			margin-top: 50px;
+			background: #C80000;
+			padding: 10px;
+			font-size: 20px;
+			display: block;
+			width: 50%;
+			border: none;
+			color: #fff;
+			border-radius: 5px;
+		}
+		
+		#obrisiBtn:hover {
+			background: #E00000;
+		}
+		
+		#editBtn {
+			 background: #1abc9c;
+			 padding: 2px;
+			 font-size: 16px;
+			 display: block;
+			 text-align: center;
+			 height: 30px;
+			 width: 150px;
+			 border: none;
+			 color: #fff;
+			 border-radius: 1px;
+		}
+		
+		
   </style>
 </head>
 <body>
@@ -162,42 +198,47 @@
       <img src="resources/tracking.png" alt="logo">
       <p>GPSTrackingVozila.ba</p>
     </div>
-		   
-    
-    <div id="tabelaVozila">
-	<table class="table-fill">
-		<thead>
-			<tr>
-				<th class="text-left">Registracija</th>
-				<th class="text-left">Model</th>
-				<th class="text-left">Zadnji servis kilometri</th>
-				<th class="text-left">Zadnji servis mjeseci</th>
-				<th class="text-left">Proizvodjac</th>
-				<th class="text-left">Godina proizvodnje</th>
-			</tr>
-		</thead>
-		<tbody class="table-hover">
-			<c:forEach items="${userFormMojaVozila}" var="vozilo">
-				<tr>
-				 <td class="text-left"><c:out value="${vozilo.registarskaOznaka}"></c:out>
-				 <td class="text-left"><c:out value="${vozilo.model}" /></td>
-			     <td class="text-left"><c:out value="${vozilo.serviskm}" /></td>
-				 <td class="text-left"><c:out value="${vozilo.servismj}" /></td>
-			     <td class="text-left"><c:out value="${vozilo.markaVozila}" /></td>
-				 <td class="text-left"><c:out value="${vozilo.godiste}" /></td>
-				 <td><input type = "checkbox" name="Ids" value = "${vozilo.registraskaOznaka}" /></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	</div>
-      
+	
+	<div id="formVozila">
+	    <form:form action="obrisiVozila" method="post" commandName="obrisiMojaVozila">
+		    <div id="tabelaVozila">
+			<table class="table-fill">
+				<thead>
+					<tr>
+						<th class="text-left">Registracija</th>
+						<th class="text-left">Model</th>
+						<th class="text-center">Servisni interval (kilometri)</th>
+						<th class="text-center">Servisni interval (mjeseci)</th>
+						<th class="text-left">Proizvodjac</th>
+						<th class="text-center">Godina proizvodnje</th>
+						<th></th>
+						<th class="text-center"></th>
+					</tr>
+				</thead>
+				<tbody class="table-hover">
+					<c:forEach items="${userFormMojaVozila}" var="vozilo">
+							<tr>
+							 <td class="text-left"><input type="hidden" name="registarskaOznaka" value="${vozilo.registarskaOznaka}"><c:out value="${vozilo.registarskaOznaka}" /></td>
+							 <td class="text-left"><c:out value="${vozilo.model}" /></td>
+						     <td class="text-right"><c:out value="${vozilo.serviskm}" /></td>
+							 <td class="text-right"><c:out value="${vozilo.servismj}" /></td>
+						     <td class="text-left"><c:out value="${vozilo.markaVozila}" /></td>
+							 <td class="text-right"><c:out value="${vozilo.godiste}" /></td>
+							 <td><input type="checkbox" name="registarskeOznake" value="${vozilo.registarskaOznaka}"></td>
+							 <td class="text-left"><a href="<c:url value='edit/${vozilo.registarskaOznaka}'/>" id="editBtn">Uredi</a></td>
+							</tr>
+
+					</c:forEach>
+				</tbody>
+			</table>
+			</div>
+			<input id="obrisiBtn" type="submit" name="obrisi" value="Obrisi oznacena vozila">
+		</form:form>
+    </div> 
     </div>
   </div>
   </div>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-     <script src="resources/js/index.js"></script>
-
+  	
 </body>
 </html>

@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -73,22 +74,6 @@ public class HomeController {
 	    return "pocetna";
 	}
 	
-	@RequestMapping(value = "/mojaVozila", method = RequestMethod.GET)
-	public Model mojaVozila(HttpSession session, Model model) 
-	{	
-		int id_korisnika = ((Korisnik)session.getAttribute("loggedInUser")).getId();
-		
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
-		
-		VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
-		List<Vozilo> lista_vozila = new ArrayList<Vozilo>();
-		lista_vozila = voziloDAO.dajVozila(id_korisnika);
-		
-		model.addAttribute("userFormMojaVozila", lista_vozila);
-		
-	    //return "mojaVozila";
-		return model;
-	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(Model model, @ModelAttribute("userFormRegister") Korisnik k) 
@@ -146,4 +131,69 @@ public class HomeController {
 		session.invalidate();
 		return "redirect:pocetna";
 	}
+	
+	@RequestMapping(value = "/mojaVozila", method = RequestMethod.GET)
+	public Model mojaVozila(HttpSession session, Model model) 
+	{	
+		int id_korisnika = ((Korisnik)session.getAttribute("loggedInUser")).getId();
+		
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
+		List<Vozilo> lista_vozila = new ArrayList<Vozilo>();
+		lista_vozila = voziloDAO.dajVozila(id_korisnika);
+		
+		model.addAttribute("userFormMojaVozila", lista_vozila);
+		
+	    //return "mojaVozila";
+		return model;
+	}
+	
+	@RequestMapping(value = "/obrisiVozila", params = "obrisi", method = RequestMethod.POST)
+	public String obrisi(@RequestParam(value = "registarskeOznake", required = false) String[] registarskeOznake)
+	{
+		if(registarskeOznake != null)
+		{
+			ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
+			VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
+			
+			for(int i = 0; i < registarskeOznake.length; i++)
+			{
+				voziloDAO.obrisiVozilo(registarskeOznake[i]);
+			}
+		}
+		
+		return "redirect:mojaVozila";
+	}
+	
+	@RequestMapping("/edit/{reg}")
+	public String edit(@PathVariable("reg")String reg, Model model, RedirectAttributes redir)
+	{
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
+		VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
+		System.out.println(reg);
+		Vozilo v = voziloDAO.dajVozilo(reg);
+		redir.addFlashAttribute("userFormEditVozila", v);
+		return "redirect:http://localhost:8080/springmvc/editVozila";
+	}
+	
+	@RequestMapping(value = "/editVozila", method = RequestMethod.GET)
+	public String editVozila(Model model) {
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
+		VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
+	    return "editVozila";
+	}
+	
+	@RequestMapping(value = "/editVozila", method = RequestMethod.POST)
+	public String updateVozila(HttpSession session, Model model, @ModelAttribute("userFormEditVozila") Vozilo v) 
+	{
+		model.addAttribute("userFormEditVozila", new Vozilo());
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
+		VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
+		System.out.println(v.getId());
+		voziloDAO.updateVozila(v.getId(), v);
+		return "redirect:mojaVozila";
+	}
+	
+	
 }

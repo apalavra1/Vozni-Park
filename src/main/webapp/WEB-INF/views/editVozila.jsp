@@ -5,15 +5,13 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Unos vozila</title>
+  <title>Edit vozila</title>
   <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
 </head>
 <body>
   <div id="wrap">
     <div id="regbar">
-      <div id="navthing">
-        <h2><a href="#" id="unosvozilaform" style="color: red">Unos vozila</a> | <a href="mojaVozila" id="mojavozilaform">Moja vozila</a> | <a href="#" id="servisiform">Servisi</a> | <a href="#" id="mapaform">Mapa</a> | <a href="odjava" id="odjavaform">Odjava</a></h2>
-      
+      <div id="navthing">      
     
     <div id="logo">
       <img src="resources/tracking.png" alt="logo">
@@ -23,7 +21,7 @@
 
     <div class="formholder" style="margin-top: 5%">
 	    <div class="randompad">
-	    	<form:form action="unosVozila" method="post" commandName="userFormUnosVozila">
+	    	<form:form action="editVozila" method="post" commandName="userFormEditVozila">
 		    	<fieldset>
 			    	<label name="markaVozila">Marka vozila</label>
 		    		<form:input path="markaVozila" />
@@ -37,7 +35,8 @@
 		    		<form:input path="godiste"/>
 		    		<label name="registarskaOznaka">Registarska oznaka</label>
 		    		<form:input path="registarskaOznaka"/>
-		    		<input type="submit" value="Unesi vozilo">
+		    		<form:hidden path="id"/>
+		    		<input type="submit" value="Spasi promjene">
 		    	</fieldset>
 	    	</form:form>
 	    </div>

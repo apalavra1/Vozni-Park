@@ -93,4 +93,110 @@ public class VoziloDAO {
 	    }
 	    return lista_vozila;
 	}
+	
+	public void obrisiVozilo(String reg)
+	{
+		Connection c = null;
+	    Statement stmt = null;
+	    
+	    try 
+	    {
+	    	c = dataSource.getConnection();
+	    	c.setAutoCommit(false);
+	    	System.out.println("Opened database successfully");
+
+	        stmt = c.createStatement();
+	    	System.out.println("Opened database successfully");
+	    	//System.out.println(v.getServiskm());
+	    	String sql = "DELETE FROM VOZNI_PARK.VOZILO WHERE REGISTRACIJA = ";
+	    	String parametri = "'" + reg + "'";
+	    	sql += parametri;
+	    	
+	    	stmt.executeUpdate(sql);
+
+	        stmt.close();
+	        c.commit();
+	        c.close();
+	    }
+	    catch (Exception e) 
+	    {
+	    	System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+	    	System.exit(0);
+	    }
+	}
+	
+	public Vozilo dajVozilo(String reg)
+	{
+		Vozilo v = new Vozilo();
+		Connection c = null;
+	    Statement stmt = null;
+	    ResultSet rs = null;
+	    
+	    try 
+	    {
+	    	c = dataSource.getConnection();
+	    	c.setAutoCommit(false);
+	    	System.out.println("Opened database successfully");
+	    	
+	    	String sql = "SELECT ID,REGISTRACIJA,NAZIV,STATUS,ZADNJI_SERVIS_KILOMETRI,ZADNJI_SERVIS_MJESECI,PREDJENI_KILOMETRI,PROIZVODJAC,GODINA_PROIZVODNJE,ID,KORISNIK_ID FROM VOZNI_PARK.VOZILO WHERE REGISTRACIJA=";
+	    	sql = sql + "'" + reg + "'";
+
+	        stmt = c.createStatement();
+	        rs = stmt.executeQuery(sql);
+	    	if(rs.next())
+	    	{
+	    		v.setRegistarskaOznaka(rs.getString("REGISTRACIJA"));
+	        	v.setModel(rs.getString("NAZIV"));
+	        	v.setServiskm(rs.getDouble("ZADNJI_SERVIS_KILOMETRI"));
+	        	v.setServismj(rs.getInt("ZADNJI_SERVIS_MJESECI"));
+	        	v.setMarkaVozila(rs.getString("PROIZVODJAC"));
+	        	v.setGodiste(rs.getDate("GODINA_PROIZVODNJE"));
+	        	v.setId(rs.getInt("ID"));
+	    	}
+	    	else
+	    	{
+	    		System.out.println("Netacni podaci");
+	    	}
+	    	rs.close();
+	        stmt.close();
+	        c.commit();
+	        c.close();
+	    }
+	    catch (Exception e) 
+	    {
+	    	System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+	    	System.exit(0);
+	    }
+	    return v;
+	}
+	
+	public void updateVozila(int id, Vozilo v)
+	{
+		Connection c = null;
+	    PreparedStatement ps = null;
+	    try 
+	    {
+	    	c = dataSource.getConnection();
+	    	c.setAutoCommit(false);
+	    	System.out.println("Opened database successfully");
+	    	
+	    	ps = c.prepareStatement("UPDATE VOZNI_PARK.VOZILO SET REGISTRACIJA = ?, NAZIV = ?, ZADNJI_SERVIS_KILOMETRI = ?, ZADNJI_SERVIS_MJESECI = ?, PROIZVODJAC = ?, GODINA_PROIZVODNJE = ? WHERE ID = ?");
+	    	ps.setString(1, v.getRegistarskaOznaka());
+	    	ps.setString(2, v.getModel());
+	    	ps.setDouble(3, v.getServiskm());
+	    	ps.setInt(4, v.getServismj());
+	    	ps.setString(5, v.getMarkaVozila());
+	    	ps.setDate(6, v.getGodiste());
+	    	ps.setInt(7, id);
+	    	ps.executeUpdate();
+	    	ps.close();
+	    	c.commit();
+	    	c.close();
+	    }
+	    catch (Exception e) 
+	    {
+	    	System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+	    	System.exit(0);
+	    }
+	}
 }
