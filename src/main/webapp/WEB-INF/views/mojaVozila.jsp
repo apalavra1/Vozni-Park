@@ -38,7 +38,7 @@
 		  height: auto;
 		  max-height:500px;
 		  margin: auto;
-		  max-width: auto;
+		  max-width: 900px;
 		  padding:10px;
 		  width: 100%;
 		  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
