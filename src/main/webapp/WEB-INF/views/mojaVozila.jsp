@@ -38,7 +38,7 @@
 		  height: auto;
 		  max-height:500px;
 		  margin: auto;
-		  max-width: 900px;
+		  /*max-width: 900px;*/
 		  padding:10px;
 		  width: 100%;
 		  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -111,7 +111,7 @@
 		td {
 		  background:#FFFFFF;
 		  padding:10px;
-		  text-align:left;
+		  text-align:center;
 		  vertical-align:middle;
 		  font-weight:300;
 		  font-size:18px;
@@ -152,13 +152,21 @@
 		
 		#formVozila {
 			position: absolute;
-			top: 27%;
-			left: 25%;
+			width:80%;
+			top: 30%;
+			left: 10%;
+			
+		}
+		
+		#tabelaVozila {
+			max-height:350px;
+			overflow:auto;  
+			margin-top:20px;
 		}
 		
 		#obrisiBtn {
 			margin-left: 25%;
-			margin-top: 50px;
+			margin-top: 40px;
 			background: #C80000;
 			padding: 10px;
 			font-size: 20px;

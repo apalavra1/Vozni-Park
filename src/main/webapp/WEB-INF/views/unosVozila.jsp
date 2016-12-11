@@ -31,7 +31,7 @@
 		    		<form:input path="model"/>
 		    		<label name="serviskm">Servisni interval (km)</label>
 		    		<form:input path="serviskm"/>
-		    		<label name="servismj">Servis interval (mjeseci))</label>
+		    		<label name="servismj">Servis interval (mjeseci)</label>
 		    		<form:input path="servismj"/>
 		    		<label name="godiste">Godiste</label>
 		    		<form:input path="godiste"/>
