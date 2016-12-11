@@ -74,7 +74,7 @@ public class VoziloDAO {
 	        	v.setRegistarskaOznaka(rs.getString("REGISTRACIJA"));
 	        	v.setModel(rs.getString("NAZIV"));
 	        	v.setServiskm(rs.getDouble("ZADNJI_SERVIS_KILOMETRI"));
-	        	System.out.println(v.getServiskm());
+	        	//System.out.println(v.getServiskm());
 	        	v.setServismj(rs.getInt("ZADNJI_SERVIS_MJESECI"));
 	        	v.setMarkaVozila(rs.getString("PROIZVODJAC"));
 	        	v.setGodiste(rs.getDate("GODINA_PROIZVODNJE"));

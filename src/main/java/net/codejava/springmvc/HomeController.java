@@ -196,10 +196,32 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/mapa", method = RequestMethod.GET)
-	public String mapa(Model model) {
+	public Model mapa(HttpSession session, Model model) {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
 		VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
-	    return "mapa";
+		GpsKoordinateDAO gpsDAO = ctx.getBean("gpsKoordinateDAO", GpsKoordinateDAO.class);
+		
+		int id_korisnika = ((Korisnik)session.getAttribute("loggedInUser")).getId();
+		
+		List<Vozilo> lista_vozila = new ArrayList<Vozilo>();
+		lista_vozila = voziloDAO.dajVozila(id_korisnika);
+		
+		model.addAttribute("userFormMapa", lista_vozila);
+		
+		List<GpsKoordinate> lista_koordinata = new ArrayList<GpsKoordinate>();
+		
+		for (int i=0; i<lista_vozila.size();i++) {
+			String reg = "";
+			reg = lista_vozila.get(i).getRegistarskaOznaka();
+			GpsKoordinate g = new GpsKoordinate();
+			g = gpsDAO.dajKoordinate(reg);
+			lista_koordinata.add(g);
+		}
+		
+		model.addAttribute("userFormMapaKoordinate", lista_koordinata);
+		return model;
+		
+	    //return "mapa";
 	}
 	
 	
