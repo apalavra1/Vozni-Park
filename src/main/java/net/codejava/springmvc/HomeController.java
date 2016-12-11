@@ -195,5 +195,12 @@ public class HomeController {
 		return "redirect:mojaVozila";
 	}
 	
+	@RequestMapping(value = "/mapa", method = RequestMethod.GET)
+	public String mapa(Model model) {
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("Beans.xml");
+		VoziloDAO voziloDAO = ctx.getBean("voziloDAO", VoziloDAO.class);
+	    return "mapa";
+	}
+	
 	
 }
