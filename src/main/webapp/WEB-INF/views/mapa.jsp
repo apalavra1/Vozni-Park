@@ -8,8 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Mapa</title>
 <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
-<script
-    src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script>
 var map;
 function initialize() {
@@ -28,9 +27,10 @@ function initialize() {
   	// Do something
   	var duzina = <c:out value="${koordinate.duzina}"/>;
   	var sirina = <c:out value="${koordinate.sirina}"/>;
+  	var reg = '<c:out value="${koordinate.voziloid}"/>';
   	var marker = new google.maps.Marker({position: {lat: duzina, lng: sirina},
   	      map: map,
-  	      title: 'Vozilo'
+  	      title: reg + " "
   	    });
   </c:forEach>
 }
