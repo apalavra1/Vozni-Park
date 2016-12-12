@@ -214,8 +214,9 @@ public class HomeController {
 			String reg = "";
 			reg = lista_vozila.get(i).getRegistarskaOznaka();
 			GpsKoordinate g = new GpsKoordinate();
-			g = gpsDAO.dajKoordinate(reg);
-			lista_koordinata.add(g);
+			//g = gpsDAO.dajKoordinate(reg);
+			lista_koordinata.add(gpsDAO.dajKoordinate(reg));
+			
 		}
 		
 		model.addAttribute("userFormMapaKoordinate", lista_koordinata);

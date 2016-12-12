@@ -38,7 +38,7 @@ public class GpsKoordinateDAO {
 	    		gps.setDuzina(rs.getDouble("DUZINA"));
 	    		gps.setSirina(rs.getDouble("SIRINA"));
 	    		gps.setId(rs.getInt("ID"));
-	    		gps.setVoziloId(rs.getString("VOZILO_ID"));
+	    		gps.setVoziloid(rs.getString("VOZILO_ID"));
 	    	}
 	    	else
 	    	{

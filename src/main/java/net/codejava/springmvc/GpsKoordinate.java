@@ -5,7 +5,7 @@ public class GpsKoordinate {
 	private int id;
 	private double duzina;
 	private double sirina;
-	private String voziloId;
+	private String voziloid;
 	
 	public int getId() {
 		return id;
@@ -31,12 +31,12 @@ public class GpsKoordinate {
 		this.sirina = sirina;
 	}
 	
-	public String getVoziloId() {
-		return this.voziloId;
+	public String getVoziloid() {
+		return this.voziloid;
 	}
 	
-	public void setVoziloId(String registracija) {
-		this.voziloId = registracija;
+	public void setVoziloid(String registracija) {
+		this.voziloid = registracija;
 	}
 	
 	GpsKoordinate() {}

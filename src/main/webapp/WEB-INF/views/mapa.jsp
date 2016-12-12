@@ -26,9 +26,8 @@ function initialize() {
     });*/
   <c:forEach items="${userFormMapaKoordinate}" var="koordinate">     
   	// Do something
-  	var duzina = <c:out value="${koordinate.duzina}"/>
-  	var sirina = <c:out value="${koordinate.sirina}"/>
-  	
+  	var duzina = <c:out value="${koordinate.duzina}"/>;
+  	var sirina = <c:out value="${koordinate.sirina}"/>;
   	var marker = new google.maps.Marker({position: {lat: duzina, lng: sirina},
   	      map: map,
   	      title: 'Vozilo'
