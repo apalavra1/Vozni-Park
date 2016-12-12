@@ -8,9 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Mapa</title>
 <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script  src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script>
 var map;
+var markers = [];
 function initialize() {
 	  var myLatLng = {lat: 43.8563, lng: 18.4131};	
 	  var mapOptions = {
@@ -32,8 +33,35 @@ function initialize() {
   	      map: map,
   	      title: reg + " "
   	    });
+	marker.id = reg;
+  	markers.push(marker);
   </c:forEach>
 }
+
+function updateMap() {
+	for (var i=0; i<markers.length; i++) {
+		markers[i].setMap(map);
+	}
+	var checkBoxValues = [];
+	var inputFields = document.getElementsByTagName('input');
+	for (var i=0; i<inputFields.length; i++) {
+		if(inputFields[i].type =='checkbox' && inputFields[i].checked == true)
+			checkBoxValues.push(inputFields[i].value);
+			
+	}
+	for (var j=0; j<markers.length; j++) {
+		var index = checkBoxValues.indexOf(markers[j].id);
+		if (index == -1) {
+			markers[j].setMap(null);
+		}
+	}
+	if (checkBoxValues.length == 0) {
+		for (var i=0; i<markers.length; i++) {
+			markers[i].setMap(map);
+		}
+	}
+	checkBoxValues = [];
+};
 
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
@@ -214,7 +242,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 					<c:forEach items="${userFormMapa}" var="vozilo">
 							<tr>
 							 <td class="text-left"><input type="hidden" name="registarskaOznaka" value="${vozilo.registarskaOznaka}"><c:out value="${vozilo.registarskaOznaka}" /></td>
-							 <td><input type="checkbox" name="registarskeOznake" value="${vozilo.registarskaOznaka}"></td>
+							 <td><input type="checkbox" name="registarskeOznake" value="${vozilo.registarskaOznaka}" onchange="updateMap()"></td>
 							</tr>
 
 					</c:forEach>
