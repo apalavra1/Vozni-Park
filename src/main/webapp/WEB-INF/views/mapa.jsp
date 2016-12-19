@@ -24,17 +24,59 @@ function initialize() {
       map: map,
       title: 'Hello World!'
     });*/
+    
+  
   <c:forEach items="${userFormMapaKoordinate}" var="koordinate">     
   	// Do something
   	var duzina = <c:out value="${koordinate.duzina}"/>;
   	var sirina = <c:out value="${koordinate.sirina}"/>;
   	var reg = '<c:out value="${koordinate.voziloid}"/>';
+  	
+  	var mytext = 'Infowindow contents in HTML'
+	var myinfowindow = new google.maps.InfoWindow({
+	    content: mytext
+	});
+  	
+		
   	var marker = new google.maps.Marker({position: {lat: duzina, lng: sirina},
   	      map: map,
-  	      title: reg + " "
+  	      title: reg + " ",
+  	      infowindow: myinfowindow
   	    });
+  	
+  	
 	marker.id = reg;
   	markers.push(marker);
+  </c:forEach>
+  
+  var i = 0;
+  <c:forEach items="${userFormMapa}" var="vozilo">
+  
+  	var contentString = '<p>Registarska oznaka: ' +
+  	'<c:out value="${vozilo.registarskaOznaka}"/>' +
+  	'<br />' + 
+  	'Model: ' +
+  	'<c:out value="${vozilo.model}"/>' + 
+	'<br />' + 
+	'Proizvodjac: ' + 
+	'<c:out value="${vozilo.markaVozila}"/>' + 
+	'<br />' +
+	'Godina proizvodnje: ' +
+	'<c:out value="${vozilo.godiste}"/>' + 
+	'</p>';
+	
+	var infowindow = new google.maps.InfoWindow({
+	    content: contentString
+	  });
+	
+	markers[i].infowindow = infowindow;
+	
+	google.maps.event.addListener(markers[i], 'click', function() {
+        this.infowindow.open(map, this);
+      });
+	
+	i = i + 1;
+  
   </c:forEach>
 }
 
