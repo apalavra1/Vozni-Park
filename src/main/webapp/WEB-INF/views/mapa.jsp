@@ -78,7 +78,10 @@ function initialize() {
 	i = i + 1;
   
   </c:forEach>
+  //autoRefresh(map);
 }
+
+
 
 function updateMap() {
 	for (var i=0; i<markers.length; i++) {
@@ -105,7 +108,106 @@ function updateMap() {
 	checkBoxValues = [];
 };
 
+function moveMarker(map, marker, latlng) {
+	marker.setPosition(latlng);
+	map.panTo(latlng);
+};
+
+function autoRefresh(map) {
+	var i, route, marker;
+	marker = markers[0];
+	if (marker.map != null) {
+		route = new google.maps.Polyline({
+			path: pathCoords,
+			geodesic : true,
+			strokeColor: '#FF0000',
+			strokeOpacity: 1.0,
+			strokeWeight: 2,
+			editable: false,
+			map:map
+		});
+		
+		for (i = 0; i < pathCoords.length; i++) {
+			setTimeout(function (coords)
+			{
+				var latlng = new google.maps.LatLng(coords.lat, coords.lng);
+				moveMarker(map, marker, latlng);
+				
+			}, 400 * i, pathCoords[i]);
+		}
+	}
+	
+}
+
+function prikaziKretanje() {
+	autoRefresh(map);
+}
+
 google.maps.event.addDomListener(window, 'load', initialize);
+
+var pathCoords = [
+	      			{
+	      			"lat": 43.832161, 
+	      			"lng": 18.308726
+	      			},
+	      			{
+	      			"lat": 43.833585, 
+	      			"lng": 18.311301
+	      			},
+	      			{
+	          		"lat": 43.833585, 
+	          		"lng": 18.311301
+	          		},
+	          		{
+	        		"lat": 43.835214, 
+	        		"lng": 18.315537
+	        		},
+	        		{
+	        		"lat": 43.837659, 
+	        		"lng": 18.317682
+	        		},
+        			{
+        			"lat": 43.840631, 
+        			"lng": 18.321759
+        			},
+        			{
+        			"lat": 43.842488,
+        			"lng": 18.327081
+        			},
+        			{
+        			"lat": 43.845088, 
+        			"lng": 18.340127
+        			},
+        			{
+        			"lat": 43.845893,
+        			"lng": 18.345964
+        			},
+        			{
+        			"lat": 43.848121, 
+        			"lng": 18.360383
+        			},
+        			{
+        			"lat": 43.848523,  
+            		"lng": 18.366949
+        			},
+        			{
+        			"lat": 43.846697, 
+        			"lng": 18.367335
+        			},
+        			{
+        			"lat": 43.844438, 
+        			"lng": 18.368065
+        			},
+        			{
+        			"lat": 43.845614, 
+        			"lng": 18.372271
+        			},
+        			{
+        			"lat": 43.846326,
+        			"lng": 18.376434
+        			}	
+      		];
+
 </script>
 
 <style type="text/css">
@@ -251,6 +353,26 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		left:30%;
 	}
 	
+	#floatingPanel {
+		position: absolute;
+        top: 32%;
+        left: 55%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 0px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;   
+	}
+	
+	#floatingPanel input {
+		width: auto;
+		min-height: 20px;
+		height:auto;
+		padding: 5px;
+	}
+	
 </style>
 
 </head>
@@ -258,7 +380,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
  <div id="wrap">
     <div id="regbar">
       <div id="navthing">
-        <h2><a href="unosVozila" id="unosvozilaform">Unos vozila</a> | <a href="mojaVozila" id="mojavozilaform">Moja vozila</a> | <a href="#" id="servisiform">Servisi</a> | <a href="mapa" id="mapaform" style="color: red">Mapa</a> | <a href="odjava" id="odjavaform">Odjava</a></h2>
+        <h2><a href="unosVozila" id="unosvozilaform">Unos vozila</a> | <a href="mojaVozila" id="mojavozilaform">Moja vozila</a> | <a href="mapa" id="mapaform" style="color: red">Mapa</a> | <a href="odjava" id="odjavaform">Odjava</a></h2>
     
     <div id="logo">
       <img src="resources/tracking.png" alt="logo">
@@ -270,9 +392,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
      <script src="resources/js/index.js"></script>
  	</div>
   </div>
-  
+  <div id="floatingPanel">
+  	<input type="submit" value="Prikazi kretanje vozila" onclick="prikaziKretanje()">
+  </div>
   <div id="map-canvas"></div>
   <div id="vozilaKorisnika">
+  
   <table class="table-fill">
 				<thead>
 					<tr>

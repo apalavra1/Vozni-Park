@@ -201,7 +201,7 @@
   <div id="wrap">
     <div id="regbar">
       <div id="navthing">
-        <h2><a href="unosVozila" id="unosvozilaform">Unos vozila</a> | <a href="mojaVozila" id="mojavozilaform" style="color: red">Moja vozila</a> | <a href="#" id="servisiform">Servisi</a> | <a href="mapa" id="mapaform">Mapa</a> | <a href="odjava" id="odjavaform">Odjava</a></h2>
+        <h2><a href="unosVozila" id="unosvozilaform">Unos vozila</a> | <a href="mojaVozila" id="mojavozilaform" style="color: red">Moja vozila</a> | <a href="mapa" id="mapaform">Mapa</a> | <a href="odjava" id="odjavaform">Odjava</a></h2>
       
     
     <div id="logo">
