@@ -110,14 +110,13 @@ function updateMap() {
 
 function moveMarker(map, marker, latlng) {
 	marker.setPosition(latlng);
-	map.panTo(latlng);
+	//map.panTo(latlng);
 };
 
 function autoRefresh(map) {
-	var i, route, marker;
-	marker = markers[0];
-	if (marker.map != null) {
-		route = new google.maps.Polyline({
+	var i, route, marker, j;
+	//if (marker.map != null) {
+		/*route = new google.maps.Polyline({
 			path: pathCoords,
 			geodesic : true,
 			strokeColor: '#FF0000',
@@ -125,18 +124,31 @@ function autoRefresh(map) {
 			strokeWeight: 2,
 			editable: false,
 			map:map
-		});
+		});*/
 		
 		for (i = 0; i < pathCoords.length; i++) {
-			setTimeout(function (coords)
+			setTimeout(function()
 			{
-				var latlng = new google.maps.LatLng(coords.lat, coords.lng);
-				moveMarker(map, marker, latlng);
-				
-			}, 400 * i, pathCoords[i]);
+				for(j = 0; j < markers.length; j++)
+				{
+					var lat = markers[j].getPosition().lat();
+					var lng = markers[j].getPosition().lng();
+					if(j % 2 == 0)
+					{
+						lat = lat + 0.001;
+						lng = lng + 0.001;
+					}
+					else 
+					{
+						lat = lat - 0.001;
+						lng = lng - 0.001;
+					}
+					var latlng = new google.maps.LatLng(lat, lng);	
+					moveMarker(map, markers[j], latlng);
+				}
+			}, 400 * i);
 		}
-	}
-	
+	//}
 }
 
 function prikaziKretanje() {
